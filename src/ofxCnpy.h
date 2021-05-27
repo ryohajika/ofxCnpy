@@ -95,23 +95,22 @@ struct NpyExporter {
 	template<class T>
 	bool saveToNpy(std::vector<T> &data,
 				   std::vector<size_t> shape,
-				   std::string file_name,
-				   std::string export_path = ""){
+				   std::string file_name){
 		// check if the directory exists first
-		if(!dd_.setExportDirectory(export_path)){
-			ofLogError("ofxCnpy::NpyExporter",
-					   "encountering directory generation issue so about the file saving");
-			return false;
-		}else{
-			if(file_name.find(kNpyExt) != std::string::npos){
-				dd_.setExportFilename(file_name.substr(0, 				  				  file_name.find(kNpyExt)),
-									  kNpyExt);
-			}else{
-				dd_.setExportFilename(file_name, kNpyExt);
-			}
-			cnpy::npy_save(dd_.getExportFileNameFull(), &data, shape, "w");
-			return true;
-		}
+//		if(!dd_.setExportDirectory(export_path)){
+//			ofLogError("ofxCnpy::NpyExporter",
+//					   "encountering directory generation issue so about the file saving");
+//			return false;
+//		}else{
+        if(file_name.find(kNpyExt) != std::string::npos){
+            dd_.setExportFilename(file_name.substr(0, file_name.find(kNpyExt)),
+                                  kNpyExt);
+        }else{
+            dd_.setExportFilename(file_name, kNpyExt);
+        }
+        cnpy::npy_save(dd_.getExportFileNameFull(), &data[0], shape, "w");
+        return true;
+//		}
 	}
 };
 
